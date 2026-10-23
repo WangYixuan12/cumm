@@ -318,6 +318,10 @@ def _get_cuda_include_lib():
                                                     ], env=_get_nvcc_check_env()).decode("utf-8").strip()
                 lib = Path(nvcc_path).parent.parent / "lib64"
                 include = Path(nvcc_path).parent.parent / "targets/x86_64-linux/include"
+                sbsa = Path(nvcc_path).parent.parent / "targets/sbsa-linux"
+                if sbsa.exists():
+                    include = sbsa / "include"
+                    lib = sbsa / "lib"
 
                 if lib.exists() and include.exists():
                     if (lib / "libcudart.so").exists() and (include / "cuda.h").exists():
